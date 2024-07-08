@@ -1,0 +1,45 @@
+{
+  "Files": [
+    {
+      "Id": "C:\\Users\\snake\\source\\repos\\GroupAssignment2\\GroupAssignment2\\obj\\Debug\\net8.0-windows10.0.19041.0\\win10-x64\\scopedcss\\bundle\\GroupAssignment2.styles.css",
+      "PackagePath": "staticwebassets\\GroupAssignment2.styles.css"
+    },
+    {
+      "Id": "C:\\Users\\snake\\source\\repos\\GroupAssignment2\\GroupAssignment2\\wwwroot\\css\\app.css",
+      "PackagePath": "staticwebassets\\css\\app.css"
+    },
+    {
+      "Id": "C:\\Users\\snake\\source\\repos\\GroupAssignment2\\GroupAssignment2\\wwwroot\\css\\bootstrap\\bootstrap.min.css",
+      "PackagePath": "staticwebassets\\css\\bootstrap\\bootstrap.min.css"
+    },
+    {
+      "Id": "C:\\Users\\snake\\source\\repos\\GroupAssignment2\\GroupAssignment2\\wwwroot\\css\\bootstrap\\bootstrap.min.css.map",
+      "PackagePath": "staticwebassets\\css\\bootstrap\\bootstrap.min.css.map"
+    },
+    {
+      "Id": "C:\\Users\\snake\\source\\repos\\GroupAssignment2\\GroupAssignment2\\wwwroot\\favicon.png",
+      "PackagePath": "staticwebassets\\favicon.png"
+    },
+    {
+      "Id": "C:\\Users\\snake\\source\\repos\\GroupAssignment2\\GroupAssignment2\\wwwroot\\index.html",
+      "PackagePath": "staticwebassets\\index.html"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0-windows10.0.19041.0\\win10-x64\\staticwebassets\\msbuild.GroupAssignment2.Microsoft.AspNetCore.StaticWebAssets.props",
+      "PackagePath": "build\\Microsoft.AspNetCore.StaticWebAssets.props"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0-windows10.0.19041.0\\win10-x64\\staticwebassets\\msbuild.build.GroupAssignment2.props",
+      "PackagePath": "build\\GroupAssignment2.props"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0-windows10.0.19041.0\\win10-x64\\staticwebassets\\msbuild.buildMultiTargeting.GroupAssignment2.props",
+      "PackagePath": "buildMultiTargeting\\GroupAssignment2.props"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0-windows10.0.19041.0\\win10-x64\\staticwebassets\\msbuild.buildTransitive.GroupAssignment2.props",
+      "PackagePath": "buildTransitive\\GroupAssignment2.props"
+    }
+  ],
+  "ElementsToRemove": []
+}
