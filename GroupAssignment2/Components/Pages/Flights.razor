@@ -1,4 +1,5 @@
-﻿@page "/flights"
+﻿@inject Assignment Assignment
+@page "/flights"
 
 <!-- center -->
 <h3>Flight Finder</h3>
@@ -59,11 +60,21 @@
 
 <p>TEST</p>
 <button @onclick="Load">Load</button>
+<input type="text" placeholder="test" value="@newTest" />
 
 
 @code {
-	private List<Airports> airports = new();
+	private string newTest;
 
-	// test
+	private void Load()
+	{
+		string[] data = Assignment.LoadCSV("airports");
 
+		foreach (string line in data)
+		{
+			string[] fields = line.Split(',');
+			newTest = fields[0];
+		}
+	}
 }
+

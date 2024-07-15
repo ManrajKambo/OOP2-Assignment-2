@@ -16,8 +16,10 @@ namespace GroupAssignment2
 
             builder.Services.AddMauiBlazorWebView();
 
+			builder.Services.AddSingleton<Assignment>(); // Register Assignment as a Singleton
+
 #if DEBUG
-    		builder.Services.AddBlazorWebViewDeveloperTools();
+			builder.Services.AddBlazorWebViewDeveloperTools();
     		builder.Logging.AddDebug();
 #endif
 

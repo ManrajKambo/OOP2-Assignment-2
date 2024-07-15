@@ -32,9 +32,9 @@ namespace GroupAssignment2
             Console.WriteLine(contents);
         }*/
 
-        public List <Airport> AirportObjList { get; private set; }
+        /*public List<Airport> AirportList { get; private set; }
 
-        public Airports()
+        private void Airports()
         {
             Airports = new List<Airport>();
         }
@@ -46,9 +46,6 @@ namespace GroupAssignment2
 
             var contents = reader.ReadToEnd();
             Console.WriteLine(contents);
-        }
-
-
-
+        }*/
     }
 }

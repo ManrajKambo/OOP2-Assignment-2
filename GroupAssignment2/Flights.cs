@@ -9,7 +9,7 @@ namespace GroupAssignment2
 {
     class Flights
     {
-        string _flightNum;
+        /*string _flightNum;
         string _airline;
         string _deptAirport;
         string _arriveAirport;
@@ -41,6 +41,6 @@ namespace GroupAssignment2
                     _price = Convert.ToDouble(_airline)
                 });
             }
-        }
+        } */
     }
 }
