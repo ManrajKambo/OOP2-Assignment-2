@@ -58,6 +58,18 @@
     </ItemGroup>
 
     <ItemGroup>
+      <None Remove="Airports.cs.ignore" />
+      <None Remove="FlightReservation.cs.ignore" />
+      <None Remove="Flights.cs.ignore" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Compile Include="OLD\Airports.cs.ignore" />
+      <Compile Include="OLD\FlightReservation.cs.ignore" />
+      <Compile Include="OLD\Flights.cs.ignore" />
+    </ItemGroup>
+
+    <ItemGroup>
         <PackageReference Include="Microsoft.Maui.Controls" Version="$(MauiVersion)" />
         <PackageReference Include="Microsoft.Maui.Controls.Compatibility" Version="$(MauiVersion)" />
         <PackageReference Include="Microsoft.AspNetCore.Components.WebView.Maui" Version="$(MauiVersion)" />

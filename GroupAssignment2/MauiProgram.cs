@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Logging;
+﻿using GroupAssignment2.Code;
+using Microsoft.Extensions.Logging;
 
 namespace GroupAssignment2
 {
@@ -16,7 +17,11 @@ namespace GroupAssignment2
 
             builder.Services.AddMauiBlazorWebView();
 
-			builder.Services.AddSingleton<Assignment>(); // Register Assignment as a Singleton
+			//builder.Services.AddSingleton<code.Assignment>(); // Register Assignment as a Singleton
+			builder.Services.AddSingleton<Code.AirportClass>();
+			builder.Services.AddSingleton<Code.FlightClass>();
+            builder.Services.AddSingleton<Code.Reservation>();
+
 
 #if DEBUG
 			builder.Services.AddBlazorWebViewDeveloperTools();
