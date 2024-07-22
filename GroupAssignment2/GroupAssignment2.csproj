@@ -68,8 +68,15 @@
 
     <ItemGroup>
       <None Remove="Airports.cs.ignore" />
+      <None Remove="Components\Pages\Flights.razor.css" />
+      <None Remove="Components\Pages\Reservations.razor.css" />
       <None Remove="FlightReservation.cs.ignore" />
       <None Remove="Flights.cs.ignore" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Content Include="Components\Pages\Flights.razor.css" />
+      <Content Include="Components\Pages\Reservations.razor.css" />
     </ItemGroup>
 
     <ItemGroup>

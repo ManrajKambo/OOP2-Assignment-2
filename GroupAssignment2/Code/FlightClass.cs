@@ -1,73 +1,66 @@
-﻿using System.Xml.Linq;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace GroupAssignment2.Code
 {
-	public class FlightClass : Assignment
-	{
-		private static List<Flight>? __flightData;
+    public class FlightClass : CSV
+    {
+        private static List<Flight>? _flightData;
 
-		private string __From;
-		private string __To;
-		private string __Day;
+        private string _from;
+        private string _to;
+        private string _day;
 
+        public FlightClass(string from, string to, string day)
+        {
+            _from = from;
+            _to = to;
+            _day = day;
 
-		public FlightClass(string from, string to, string day)
-		{
-			this.__From = from;
-			this.__To = to;
-			this.__Day = day;
+            LoadData();
+        }
 
-			this.LoadData();
-		}
+        private void LoadData()
+        {
+            _flightData = new List<Flight>();
 
-		private void LoadData()
-		{
-			__flightData = new List<Flight>();
+            foreach (string line in base.LoadCSV("flights"))
+            {
+                string[] split = line.Split(',');
 
-			foreach (string __line in base.LoadCSV("flights"))
-			{
-				string[] __split = __line.Split(',');
+                string flightCode = split[0];
+                string flightName = split[1];
+                string fromAirportCode = split[2];
+                string toAirportCode = split[3];
+                string flightDayOfWeek = split[4];
+                string flightTime = split[5];
+                int seatsAvailable = Convert.ToInt32(split[6]);
+                double flightCost = Convert.ToDouble(split[7]);
 
-				string __flightCode = __split[0];
-				string __flightName = __split[1];
-				string __fromAirportCode = __split[2];
-				string __toAirportCode = __split[3];
-				string __flightDayOfWeek = __split[4];
-				string __flightTime = __split[5];
-				int __seatsAvailable = Convert.ToInt32(__split[6]);
-				double __flightCost = Convert.ToDouble(__split[7]);
+                if ((!string.IsNullOrEmpty(_from) && _from != fromAirportCode) ||
+                    (!string.IsNullOrEmpty(_to) && _to != toAirportCode) ||
+                    (!string.IsNullOrEmpty(_day) && _day != flightDayOfWeek))
+                {
+                    continue;
+                }
 
-				if ((!string.IsNullOrEmpty(this.__From)) && (this.__From != __fromAirportCode))
-				{
-					continue;
-				}
+                _flightData.Add(new Flight(
+                    flightCode,
+                    flightName,
+                    fromAirportCode,
+                    toAirportCode,
+                    flightDayOfWeek,
+                    flightTime,
+                    seatsAvailable,
+                    flightCost
+                ));
+            }
+        }
 
-				if ((!string.IsNullOrEmpty(this.__To)) && (this.__To != __toAirportCode))
-				{
-					continue;
-				}
-
-				if ((!string.IsNullOrEmpty(this.__Day)) && (this.__Day != __flightDayOfWeek))
-				{
-					continue;
-				}
-
-				__flightData.Add(new Flight(
-					__flightCode,
-					__flightName,
-					__fromAirportCode,
-					__toAirportCode,
-					__flightDayOfWeek,
-					__flightTime,
-					__seatsAvailable,
-					__flightCost
-				));
-			}
-		}
-
-		public static List<Flight> GetData()
-		{
-			return __flightData;
-		}
-	}
+        public static List<Flight> GetData()
+        {
+            return _flightData ?? new List<Flight>();
+        }
+    }
 }

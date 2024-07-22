@@ -1,151 +1,177 @@
-﻿@using GroupAssignment2.Code;
+﻿@using GroupAssignment2.Code
 @page "/flights"
 
-<!-- center -->
 <h3>Flight Finder</h3>
-<form id="flight_finder_form">
-	<!-- selectors -->
-	<label for="from">From:</label>
-	<select id="from" name="from" @bind="from">
-		<option value="" selected>Any</option>
-		@foreach (var ad in airportData)
-		{
-			<option value="@ad.airportCode">@ad.airportFull (@ad.airportCode)</option>
-		}
-	</select>
+<form id="flight_finder_form" onsubmit="return false;">
+    <label for="from">From:</label>
+    <select id="from" name="from" @bind="from">
+        <option value="" selected>Any</option>
+        @foreach (var ad in airportData)
+        {
+            <option value="@ad.AirportCode">@ad.AirportFull (@ad.AirportCode)</option>
+        }
+    </select>
 
-	<label for="to">To:</label>
-	<select id="to" name="to" @bind="to">
-		<option value="" selected>Any</option>
-		@foreach (var ad in airportData)
-		{
-			<option value="@ad.airportCode">@ad.airportFull (@ad.airportCode)</option>
-		}
-	</select>
+    <label for="to">To:</label>
+    <select id="to" name="to" @bind="to">
+        <option value="" selected>Any</option>
+        @foreach (var ad in airportData)
+        {
+            <option value="@ad.AirportCode">@ad.AirportFull (@ad.AirportCode)</option>
+        }
+    </select>
 
-	<label for="day">Day:</label>
-	<select id="day" name="day" @bind="day">
-		<option value="" selected>Any</option>
-		@foreach (var d in daysOfWeek)
-		{
-			<option value="@d">@d</option>
-		}
-	</select>
+    <label for="day">Day:</label>
+    <select id="day" name="day" @bind="day">
+        <option value="" selected>Any</option>
+        @foreach (var d in daysOfWeek)
+        {
+            <option value="@d">@d</option>
+        }
+    </select>
+    <button type="submit" @onclick="findFlights">Find Flights</button>
 </form>
-<button @onclick="findFlights">Find Flights</button>
 
 <h3>Flights</h3>
-<form id="flights_form">
-	<select id="flights" name="flights" @onchange="SelectFlight">
-		@if (flightData != null)
-		{
-			<option value="" selected>Found @flightData.Count() Flight(s):</option>
-
-			@foreach (var fd in flightData)
-			{
-				<option value="@fd.flightCode">
-					@fd.flightCode: @fd.flightName,
-					@fd.fromAirportCode -> @fd.toAirportCode,
-					@fd.flightDayOfWeek @@ @fd.flightTime,
-					@fd.seatsAvailable,
-					$@fd.flightCost
-				</option>
-			}
-		}
-		else {
-			<option value="" selected>Loading...</option>
-		}
-	</select>
+<form id="flights_form" onsubmit="return false;">
+    <select id="flights" name="flights" @onchange="SelectFlight">
+        @if (flightData != null)
+        {
+            <option value="" selected>Found @flightData.Count() Flight(s):</option>
+            @foreach (var fd in flightData)
+            {
+                <option value="@fd.FlightCode">
+                    @fd.FlightCode: @fd.FlightName,
+                    @fd.FromAirportCode -> @fd.ToAirportCode,
+                    @fd.FlightDayOfWeek @@ @fd.FlightTime,
+                    @fd.SeatsAvailable,
+                    $@fd.FlightCost
+                </option>
+            }
+        }
+        else
+        {
+            <option value="" selected>Loading...</option>
+        }
+    </select>
 </form>
 
 <h3>Reserve</h3>
-<form id="reserve_form">
-	<label for="flight_code">Flight code:</label>
-	<input type="text" id="flight_code" name="flight_code" @bind="reserveFlightCode" placeholder="Flight" readonly />
-	<br />
+<form id="reserve_form" onsubmit="return false;">
+    <label for="flight_code">Flight code:</label>
+    <input type="text" id="flight_code" name="flight_code" @bind="reserveFlightCode" placeholder="Flight" readonly />
+    <br />
 
-	<label for="airline">Airline:</label>
-	<input type="text" id="airline" name="airline" @bind="reserveFlightAirline" placeholder="Airline" readonly />
-	<br />
+    <label for="airline">Airline:</label>
+    <input type="text" id="airline" name="airline" @bind="reserveFlightAirline" placeholder="Airline" readonly />
+    <br />
 
-	<label for="day">Day:</label>
-	<input type="text" id="day" name="day" @bind="reserveFlightDay" placeholder="Day" readonly />
-	<br />
+    <label for="day">Day:</label>
+    <input type="text" id="day" name="day" @bind="reserveFlightDay" placeholder="Day" readonly />
+    <br />
 
-	<label for="time">Time:</label>
-	<input type="text" id="time" name="time" @bind="reserveFlightTime" placeholder="Time" readonly />
-	<br />
+    <label for="time">Time:</label>
+    <input type="text" id="time" name="time" @bind="reserveFlightTime" placeholder="Time" readonly />
+    <br />
 
-	<label for="cost">Cost:</label>
-	<input type="number" id="cost" name="cost" @bind="reserveFlightCost" placeholder="0" readonly />
-	<br />
+    <label for="cost">Cost:</label>
+    <input type="number" id="cost" name="cost" @bind="reserveFlightCost" placeholder="0" readonly />
+    <br />
 
-	<label for="name">Name:</label>
-	<input type="text" id="name" name="name" placeholder="Name" />
-	<br />
+    <label for="name">Name:</label>
+    <input type="text" id="name" name="name" @bind="reserveCustName" placeholder="Name" />
+    <br />
 
-	<label for="citizenship">Citizenship:</label>
-	<input type="text" id="citizenship" name="citizenship" placeholder="Citizenship" />
-	<br />
-
-	<button type="submit">Reserve</button>
+    <label for="citizenship">Citizenship:</label>
+    <input type="text" id="citizenship" name="citizenship" @bind="reserveCustCitizenship" placeholder="Citizenship" />
+    <br />
+    <button type="submit" @onclick="reserveFlight">Reserve</button>
 </form>
-<p id="reservation_code">Reservation Code:</p>
-
+<p id="reservation_code">Reservation Code: @reservationCode</p>
 
 @code {
-	private string from = "";
-	private string to = "";
-	private string day = "";
+    private string from = "";
+    private string to = "";
+    private string day = "";
 
-	private string flight = "";
-	private List<Flight>? flightData;
+    private List<Flight>? flightData;
+    private Flight? SelectedFlight;
 
-	AirportClass ac = new AirportClass();
-	List<Airport> airportData = AirportClass.GetData();
+    private string? reserveFlightCode;
+    private string? reserveFlightAirline;
+    private string? reserveFlightDay;
+    private string? reserveFlightTime;
+    private string? reserveFlightCost;
+    private string reserveCustName = "";
+    private string reserveCustCitizenship = "";
+    private string reservationCode = "n/a";
 
+    AirportClass ac = new AirportClass();
+    List<Airport> airportData = AirportClass.GetData();
 
-	List<string> daysOfWeek = new List<string>
-	{
-		"Sunday",
-		"Monday",
-		"Tuesday",
-		"Wednesday",
-		"Thursday",
-		"Friday",
-		"Saturday"
-	};
+    List<string> daysOfWeek = new List<string>
+    {
+        "Sunday",
+        "Monday",
+        "Tuesday",
+        "Wednesday",
+        "Thursday",
+        "Friday",
+        "Saturday"
+    };
 
+    private void findFlights()
+    {
+        FlightClass fc = new FlightClass(from, to, day);
+        flightData = FlightClass.GetData();
+    }
 
-	private void findFlights()
-	{
-		FlightClass fc = new FlightClass(from, to, day);
-		flightData = FlightClass.GetData();
-	}
+    private void SelectFlight(ChangeEventArgs selectedFlight)
+    {
+        string? selectedFlightCode = selectedFlight.Value.ToString();
 
+        if (!string.IsNullOrEmpty(selectedFlightCode))
+        {
+            SelectedFlight = flightData.FirstOrDefault(f => f.FlightCode == selectedFlightCode);
 
-	private Flight SelectedFlight;
-	private string? reserveFlightCode;
-	private string? reserveFlightAirline;
-	private string? reserveFlightDay;
-	private string? reserveFlightTime;
-	private string? reserveFlightCost;
-	private void SelectFlight(ChangeEventArgs selectedFlight)
-	{
-		flight = selectedFlight.Value.ToString();
+            if (SelectedFlight != null)
+            {
+                reserveFlightCode = SelectedFlight.FlightCode;
+                reserveFlightAirline = SelectedFlight.FlightName;
+                reserveFlightDay = SelectedFlight.FlightDayOfWeek;
+                reserveFlightTime = SelectedFlight.FlightTime;
+                reserveFlightCost = SelectedFlight.FlightCost.ToString();
+            }
+        }
+    }
 
-		if (!string.IsNullOrEmpty(flight))
-		{
-			SelectedFlight = flightData.FirstOrDefault(f => f.flightCode == flight);
-		}
+    private void reserveFlight()
+    {
+        if (SelectedFlight == null)
+        {
+            reservationCode = "Error: Select a flight first.";
+        }
+        else if (string.IsNullOrEmpty(reserveCustName) || string.IsNullOrEmpty(reserveCustCitizenship))
+        {
+            reservationCode = "Error: Name and Citizenship are required.";
+        }
+        else
+        {
+            var reservation = new Reservation(
+                SelectedFlight,
+                reserveCustName,
+                reserveCustCitizenship
+            );
 
-		if (SelectedFlight != null)
-		{
-			reserveFlightCode = SelectedFlight.flightCode;
-			reserveFlightAirline = SelectedFlight.flightName;
-			reserveFlightDay = SelectedFlight.flightDayOfWeek;
-			reserveFlightTime = SelectedFlight.flightTime;
-			reserveFlightCost = SelectedFlight.flightCost.ToString();
-		}
-	}
+            if (Reservation.IsDuplicate(reservation))
+            {
+                reservationCode = "Error: Duplicate reservation detected.";
+            }
+            else
+            {
+                Reservation.AddReservation(reservation);
+                reservationCode = reservation.ReservationCode;
+            }
+        }
+    }
 }

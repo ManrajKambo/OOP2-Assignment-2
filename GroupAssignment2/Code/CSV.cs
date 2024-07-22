@@ -1,6 +1,6 @@
 ﻿namespace GroupAssignment2.Code
 {
-    public class Assignment
+    public class CSV
     {
         internal string[] LoadCSV(string fileName)
         {

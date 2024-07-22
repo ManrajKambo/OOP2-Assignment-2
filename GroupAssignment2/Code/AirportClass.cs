@@ -1,30 +1,31 @@
-﻿namespace GroupAssignment2.Code
+﻿using System.Collections.Generic;
+using System.IO;
+
+namespace GroupAssignment2.Code
 {
-	public class AirportClass : Assignment
-	{
-		private static List<Airport> __airportData = new List<Airport>();
+    public class AirportClass : CSV
+    {
+        private static List<Airport> _airportData = new List<Airport>();
 
-		public AirportClass() {
-			this.LoadData();
-		}
+        public AirportClass()
+        {
+            LoadData();
+        }
 
-		private void LoadData()
-		{
-			foreach (string __line in base.LoadCSV("airports"))
-			{
-				string[] __split = __line.Split(',');
-				string __airportCode = __split[0];
-				string __airportFull = __split[1];
-				__airportData.Add(new Airport(
-					__airportCode,
-					__airportFull
-				));
-			}
-		}
+        private void LoadData()
+        {
+            foreach (string line in base.LoadCSV("airports"))
+            {
+                string[] split = line.Split(',');
+                string airportCode = split[0];
+                string airportFull = split[1];
+                _airportData.Add(new Airport(airportCode, airportFull));
+            }
+        }
 
-		public static List<Airport> GetData()
-		{
-			return __airportData;
-		}
-	}
+        public static List<Airport> GetData()
+        {
+            return _airportData;
+        }
+    }
 }

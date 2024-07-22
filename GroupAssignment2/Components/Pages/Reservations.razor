@@ -1,0 +1,177 @@
+﻿@using GroupAssignment2.Code
+@page "/reservations"
+
+<h3>Reservation Finder</h3>
+<form id="reservation_finder_form" onsubmit="return false;">
+    <label for="code">Reservation code:</label>
+    <select id="code" name="code" @bind="code">
+        <option value="" selected>Any</option>
+        @foreach (var r in Reservation.GetAllUniqueReservationCodes())
+        {
+            <option value="@r">@r</option>
+        }
+    </select>
+
+    <label for="airline">Airline:</label>
+    <select id="airline" name="airline" @bind="airline">
+        <option value="" selected>Any</option>
+        @foreach (var r in Reservation.GetAllUniqueFlightNames())
+        {
+            <option value="@r">@r</option>
+        }
+    </select>
+
+    <label for="name">Customer name:</label>
+    <select id="name" name="name" @bind="name">
+        <option value="" selected>Any</option>
+        @foreach (var r in Reservation.GetAllUniqueNames())
+        {
+            <option value="@r">@r</option>
+        }
+    </select>
+    <button type="submit" @onclick="FindReservations">Find Reservations</button>
+</form>
+
+<h3>Reservations</h3>
+<form id="reservations_form" onsubmit="return false;">
+    <select id="reservations" name="reservations" @onchange="SelectReservation">
+        @if (filteredReservations != null)
+        {
+            <option value="" selected>Found @filteredReservations.Count() Reservation(s):</option>
+            @foreach (var r in filteredReservations)
+            {
+                <option value="@r.ReservationCode">
+                    Code = @r.ReservationCode,
+                    Flight = @r.FlightName (@r.FlightCode),
+                    Time = @r.FlightDayOfWeek @@ @r.FlightTime,
+                    Name = @r.Name,
+                    Citizenship = @r.Citizenship
+                </option>
+            }
+        }
+        else
+        {
+            <option value="" selected>Loading...</option>
+        }
+    </select>
+</form>
+
+<h3>Edit Reservation</h3>
+<form id="edit_reservation_form" onsubmit="return false;">
+    <label for="reservation_code">Reservation code:</label>
+    <input type="text" id="reservation_code" name="reservation_code" @bind="reserveCode" placeholder="Reservation Code" readonly />
+    <br />
+
+    <label for="flight_code">Flight code:</label>
+    <input type="text" id="flight_code" name="flight_code" @bind="reserveFlightCode" placeholder="Flight" readonly />
+    <br />
+
+    <label for="airline">Airline:</label>
+    <input type="text" id="airline" name="airline" @bind="reserveFlightAirline" placeholder="Airline" readonly />
+    <br />
+
+    <label for="day">Day:</label>
+    <input type="text" id="day" name="day" @bind="reserveFlightDay" placeholder="Day" readonly />
+    <br />
+
+    <label for="time">Time:</label>
+    <input type="text" id="time" name="time" @bind="reserveFlightTime" placeholder="Time" readonly />
+    <br />
+
+    <label for="cost">Cost:</label>
+    <input type="number" id="cost" name="cost" @bind="reserveFlightCost" placeholder="0" readonly />
+    <br />
+
+    <label for="name">Name:</label>
+    <input type="text" id="name" name="name" @bind="reserveCustName" placeholder="Name" />
+    <br />
+
+    <label for="citizenship">Citizenship:</label>
+    <input type="text" id="citizenship" name="citizenship" @bind="reserveCustCitizenship" placeholder="Citizenship" />
+    <br />
+    <button type="submit" @onclick="UpdateReservation">Update</button>
+    <button type="button" @onclick="DeleteReservation">Delete</button>
+</form>
+
+@code {
+    private string code = "";
+    private string airline = "";
+    private string name = "";
+
+    private List<Reservation>? filteredReservations;
+    private Reservation? SelectedReservation;
+
+    private string? reserveCode;
+    private string? reserveFlightCode;
+    private string? reserveFlightAirline;
+    private string? reserveFlightDay;
+    private string? reserveFlightTime;
+    private decimal? reserveFlightCost;
+    private string reserveCustName = "";
+    private string reserveCustCitizenship = "";
+
+    private void FindReservations()
+    {
+        filteredReservations = Reservation.GetAllReservations(code, airline, name);
+    }
+
+    private void SelectReservation(ChangeEventArgs selectedReservation)
+    {
+        string? selectedReservationCode = selectedReservation.Value?.ToString();
+
+        if (!string.IsNullOrEmpty(selectedReservationCode))
+        {
+            SelectedReservation = filteredReservations.FirstOrDefault(r => r.ReservationCode == selectedReservationCode);
+
+            if (SelectedReservation != null)
+            {
+                reserveCode = SelectedReservation.ReservationCode;
+                reserveFlightCode = SelectedReservation.FlightCode;
+                reserveFlightAirline = SelectedReservation.FlightName;
+                reserveFlightDay = SelectedReservation.FlightDayOfWeek;
+                reserveFlightTime = SelectedReservation.FlightTime;
+                reserveFlightCost = SelectedReservation.FlightCost;
+                reserveCustName = SelectedReservation.Name;
+                reserveCustCitizenship = SelectedReservation.Citizenship;
+            }
+        }
+    }
+
+    private void UpdateReservation()
+    {
+        if (SelectedReservation == null)
+        {
+            return;
+        }
+
+        SelectedReservation.Name = reserveCustName;
+        SelectedReservation.Citizenship = reserveCustCitizenship;
+
+        Reservation.UpdateReservation(SelectedReservation);
+
+        FindReservations();
+    }
+
+    private void DeleteReservation()
+    {
+        if (SelectedReservation == null)
+        {
+            return;
+        }
+
+        Reservation.DeleteReservation(SelectedReservation);
+
+        SelectedReservation = null;
+        reserveCode = "";
+        reserveCustName = "";
+        reserveCustCitizenship = "";
+
+        reserveFlightCode = "";
+        reserveFlightAirline = "";
+        reserveFlightDay = "";
+        reserveFlightTime = "";
+        reserveFlightCost = 0;
+
+        FindReservations();
+    }
+}
