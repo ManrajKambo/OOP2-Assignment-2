@@ -58,15 +58,18 @@
     </ItemGroup>
 
     <ItemGroup>
-      <None Remove="Airports.cs.ignore" />
-      <None Remove="FlightReservation.cs.ignore" />
-      <None Remove="Flights.cs.ignore" />
+      <AndroidResource Remove="OLD\**" />
+      <Compile Remove="OLD\**" />
+      <Content Remove="OLD\**" />
+      <EmbeddedResource Remove="OLD\**" />
+      <MauiXaml Remove="OLD\**" />
+      <None Remove="OLD\**" />
     </ItemGroup>
 
     <ItemGroup>
-      <Compile Include="OLD\Airports.cs.ignore" />
-      <Compile Include="OLD\FlightReservation.cs.ignore" />
-      <Compile Include="OLD\Flights.cs.ignore" />
+      <None Remove="Airports.cs.ignore" />
+      <None Remove="FlightReservation.cs.ignore" />
+      <None Remove="Flights.cs.ignore" />
     </ItemGroup>
 
     <ItemGroup>
